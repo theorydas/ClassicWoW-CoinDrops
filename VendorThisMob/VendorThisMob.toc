@@ -1,0 +1,9 @@
+## Interface: 46575
+## Title: Vendor This Mob
+## Notes: Shows the average copper dropped by a mob assuming you vendor all possible drops.
+## Version: 1.0
+## Description: Shows the average copper dropped by a mob assuming you vendor all possible drops.
+## DefaultState: enabled
+
+wowhead_data.lua
+EnemyTooltips.lua
