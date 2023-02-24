@@ -58,6 +58,10 @@ class Mob():
         
         lvl_min = info_card["minlevel"]
         lvl_max = info_card["maxlevel"]
+        # The maximum known level is 63.
+        if lvl_min > 63: lvl_min = 63
+        if lvl_max > 63: lvl_max = 63
+        
         name = info_card["name"]
         type_enemy = info_card["classification"]
         type_life = info_card["type"]
