@@ -33,7 +33,9 @@ class Mob():
         
         self.ah_worth = sum([drop.buyout *drop.chance for drop in self.drops])
         self.ah_worth = round(self.ah_worth, 0) # Round to nearest copper.
-    
+
+        del self.wowhead # We don't need this anymore.
+        
     def find_rawcopper(self):
         raw_copper_matches = re.findall(r"\[money=(\d+)\]", self.wowhead)
         
