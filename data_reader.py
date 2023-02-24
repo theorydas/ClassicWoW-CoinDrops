@@ -61,8 +61,13 @@ class Mob():
         name = info_card["name"]
         type_enemy = info_card["classification"]
         type_life = info_card["type"]
-        react_alliance = info_card["react"][0]
-        react_horde = info_card["react"][1]
+        
+        # Sometimes the reaction is not given.
+        try: reaction = info_card["react"]
+        except: reaction = [None, None]
+        react_alliance = reaction[0]
+        react_horde = reaction[1]
+            
         
         return lvl_min, lvl_max, name, type_enemy, type_life, react_alliance, react_horde
     
@@ -95,6 +100,7 @@ class Mob():
             try:
                 reported_count = drop["modes"]["0"]["count"]
                 reported_attempts = drop["modes"]["0"]["outof"]
+                if reported_attempts == 0: continue
             except:
                 continue
 
