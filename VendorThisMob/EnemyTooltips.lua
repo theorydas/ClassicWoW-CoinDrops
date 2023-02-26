@@ -24,15 +24,15 @@ function VendorThisMob.OnEnemyTooltip(Tooltip)
         local Gold = math.floor(TotalCopper / 10000)
         local Silver = math.floor((TotalCopper - (Gold * 10000)) / 100)
         local Copper = TotalCopper - (Gold * 10000) - (Silver * 100)
-
+        
         local TooltipText = ""
         -- We need to add the gold, silver and copper values to the tooltip and use the ingame icons for them.
         if Gold == 0 and Silver == 0 and Copper > 0 then
             -- The color should be white.
             TooltipText = "|cffffffff|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t" .. Copper.. "|r"
-        elseif Gold == 0 and Silver > 0 and Copper > 0 then
+        elseif Gold == 0 and Silver > 0 then
             TooltipText = "|cffffffff|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t" .. Silver .. " |TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t" .. Copper.. "|r"
-        else
+        elseif Gold > 0 then
             TooltipText = "|cffffffff|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t" .. Gold .. " |TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t" .. Silver .. " |TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t" .. Copper.. "|r"
         end
 
