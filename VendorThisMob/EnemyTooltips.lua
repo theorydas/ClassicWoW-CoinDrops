@@ -40,14 +40,10 @@ function VendorThisMob.OnEnemyTooltip(Tooltip)
         -- Additionally we show the score. If it is a positive integer we show that many stars, if it is a negative integer we show that many skulls.
         -- The textures are from Wow's own files.
         TooltipText = TooltipText.. "     ("
-        if Score > 0 then
-            for i = 1, Score do
-                TooltipText = TooltipText .. " |TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:0:0:2:0|t"
-            end
-        elseif Score < 0 then
-            for i = 1, Score * -1 do
-                TooltipText = TooltipText .. " |TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0:2:0|t"
-            end
+        local textrue = Score > 0 and "Interface\\TargetingFrame\\UI-RaidTargetingIcon_1" or "Interface\\TargetingFrame\\UI-RaidTargetingIcon_8"
+        for i = 1, math.abs(Score) do
+
+            TooltipText = TooltipText .. "|T" .. textrue .. ":0:0:2:0|t"
         end
         TooltipText = TooltipText .. ")"
         
