@@ -17,10 +17,44 @@ function VendorThisMob.OnEnemyTooltip(Tooltip)
     
     -- If the UnitID is not in the MobDrops dict, we show a tooltip with the dictionary's value.
     if MobDrops[UnitID] ~= nil then
-        local TotalCopper = MobDrops[UnitID]
+        local TotalCopper = MobDrops[UnitID][1]
+        local Score = MobDrops[UnitID][2]
 
-        SetTooltipMoney(Tooltip, TotalCopper, nil, SELL_PRICE_TEXT)
+        -- We need to convert the TotalCopper value to gold, silver and copper.
+        local Gold = math.floor(TotalCopper / 10000)
+        local Silver = math.floor((TotalCopper - (Gold * 10000)) / 100)
+        local Copper = TotalCopper - (Gold * 10000) - (Silver * 100)
+
+        local TooltipText = ""
+        -- We need to add the gold, silver and copper values to the tooltip and use the ingame icons for them.
+        if Gold == 0 and Silver == 0 and Copper > 0 then
+            -- The color should be white.
+            TooltipText = "|cffffffff|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t" .. Copper.. "|r"
+        elseif Gold == 0 and Silver > 0 and Copper > 0 then
+            TooltipText = "|cffffffff|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t" .. Silver .. " |TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t" .. Copper.. "|r"
+        else
+            TooltipText = "|cffffffff|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t" .. Gold .. " |TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t" .. Silver .. " |TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t" .. Copper.. "|r"
+        end
+
+        
+        -- Additionally we show the score. If it is a positive integer we show that many stars, if it is a negative integer we show that many skulls.
+        -- The textures are from Wow's own files.
+        TooltipText = TooltipText.. "     ("
+        if Score > 0 then
+            for i = 1, Score do
+                TooltipText = TooltipText .. " |TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:0:0:2:0|t"
+            end
+        elseif Score < 0 then
+            for i = 1, Score * -1 do
+                TooltipText = TooltipText .. " |TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0:2:0|t"
+            end
+        end
+        TooltipText = TooltipText .. ")"
+        
+        Tooltip:AddLine(TooltipText)
+        Tooltip:Show()
     end
+
 end
 
 GameTooltip:HookScript("OnTooltipSetUnit", VendorThisMob.OnEnemyTooltip)
